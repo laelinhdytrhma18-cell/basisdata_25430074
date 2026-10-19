@@ -1,10 +1,10 @@
-# p04: Normalisasi Proyek `toko_74` (Milestone Proyek 4)
+# p04: Normalisasi Proyek `toko_074` (Milestone Proyek 4)
 
 **Identitas Mahasiswa**
 - **Nama:** Laelin Hidayaturrohma
 - **NIM:** 25430074
 - **Kelas:** C
-- **Studi Kasus:** Laelin Scrunchie & Hair Accessories (`toko_74`)
+- **Studi Kasus:** Laelin Scrunchie & Hair Accessories (`toko_074`)
 - **Berkas:** `p04_normalisasi_25430074.md`
 
 ---
@@ -16,7 +16,7 @@ Dokumen sumber berasal dari p02: nota penjualan fiktif toko.
 ```text
 ============================================================
            LAELIN SCRUNCHIE & HAIR ACCESSORIES
-         Jl. Ahmad Yani No. 74, Metro, Lampung
+         Jl. Ahmad Yani No. 074, Metro, Lampung
 ============================================================
 No. Nota   : NOTA-20261004-074         Tanggal : 04/10/2026
 Pelanggan  : Budi Santoso              Status  : Member (Diskon 5%)
@@ -215,7 +215,7 @@ Semua penentu adalah kunci kandidat, jadi skema memenuhi BCNF. Pemeriksaan ini h
 
 ---
 
-## 8. Catatan Pembaruan ERD Proyek `toko_74`
+## 8. Catatan Pembaruan ERD Proyek `toko_074`
 
 Dari hasil normalisasi, ERD berubah pada lima titik:
 
@@ -239,4 +239,4 @@ Dokumen kebutuhan data p02 sudah dikumpulkan, sehingga aku tidak mengubahnya. Pe
 ### Catatan aturan qty
 ERD tetap memakai `CHECK (qty_detail_pesanan > 0 AND qty_detail_pesanan <= 5)` sesuai kamus data p02 ("jumlah item dibeli, maks 5"). Batas ini membatasi jumlah per produk dan terpisah dari AB-04, yaitu maksimal 5 jenis produk per pesanan. Batas 5 jenis produk ditegakkan pada tahap implementasi (Pertemuan 5).
 
-- *Bukti visual ERD update:* `laporan/img/p03_erd_toko_74_update.png`
+- *Bukti visual ERD update:* `laporan/img/p04_erd_25430074_update.png`
