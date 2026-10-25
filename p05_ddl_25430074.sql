@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS pelanggan;
 CREATE TABLE kategori (
     id_kategori INT AUTO_INCREMENT,
     nama_kategori VARCHAR(100) NOT NULL,
-    deskripsi_kategori TEXT NULL,
+    deskripsi_kategori VARCHAR(255) NULL,
     CONSTRAINT pk_kategori PRIMARY KEY (id_kategori),
     CONSTRAINT uq_kategori_nama UNIQUE (nama_kategori)
 ) ENGINE=InnoDB;

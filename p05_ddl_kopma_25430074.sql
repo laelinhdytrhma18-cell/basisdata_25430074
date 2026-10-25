@@ -1,13 +1,13 @@
 -- ============================================================
 -- Berkas: p05_ddl_kopma_25430074.sql
 -- Basis Data: kopma_25430074
--- Modul 5: Membangun Struktur dengan DDL dan Constraint
+-- Modul 5 & 6: Membangun Struktur dengan DDL dan Sinkronisasi Data
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS kopma_25430074;
 USE kopma_25430074;
 
--- 1. Hapus tabel berurutan dari anak ke induk (agar tidak error Foreign Key)[cite: 20]
+-- 1. Hapus tabel berurutan dari anak ke induk (agar tidak error Foreign Key)
 DROP TABLE IF EXISTS detail_pembelian;
 DROP TABLE IF EXISTS pembelian;
 DROP TABLE IF EXISTS detail_penjualan;
@@ -17,40 +17,36 @@ DROP TABLE IF EXISTS barang;
 DROP TABLE IF EXISTS anggota;
 DROP TABLE IF EXISTS petugas;
 
--- 2. Buat Tabel Master (Induk)[cite: 20]
+-- 2. Buat Tabel Master (Induk) - Tanpa kolom kode (murni ID), dengan NPM & Kategori
 
 CREATE TABLE petugas (
     id_petugas SMALLINT NOT NULL AUTO_INCREMENT,
-    kode_petugas CHAR(3) NOT NULL,
     nama_petugas VARCHAR(100) NOT NULL,
     peran_petugas ENUM('kasir', 'gudang', 'ketua') NOT NULL,
-    CONSTRAINT pk_petugas PRIMARY KEY (id_petugas),
-    CONSTRAINT uq_petugas_kode UNIQUE (kode_petugas)
+    CONSTRAINT pk_petugas PRIMARY KEY (id_petugas)
 ) ENGINE=InnoDB;
 
 CREATE TABLE anggota (
     id_anggota INT NOT NULL AUTO_INCREMENT,
     no_anggota VARCHAR(10) NOT NULL,
-    nim_anggota CHAR(10) NOT NULL,
+    npm_anggota CHAR(10) NOT NULL,
     nama_anggota VARCHAR(100) NOT NULL,
     status_anggota ENUM('aktif', 'nonaktif') DEFAULT 'aktif',
     poin_loyalitas INT DEFAULT 0,
     CONSTRAINT pk_anggota PRIMARY KEY (id_anggota),
     CONSTRAINT uq_anggota_no UNIQUE (no_anggota),
-    CONSTRAINT uq_anggota_nim UNIQUE (nim_anggota),
+    CONSTRAINT uq_anggota_npm UNIQUE (npm_anggota),
     CONSTRAINT ck_anggota_poin CHECK (poin_loyalitas >= 0)
 ) ENGINE=InnoDB;
 
 CREATE TABLE barang (
     id_barang INT NOT NULL AUTO_INCREMENT,
-    kode_barang VARCHAR(10) NOT NULL,
     nama_barang VARCHAR(100) NOT NULL,
-    kategori_barang ENUM('ATK', 'makanan', 'minuman') NOT NULL,
+    kategori_barang VARCHAR(50) NOT NULL,
     harga_jual_barang DECIMAL(12,2) NOT NULL,
     stok_barang INT NOT NULL DEFAULT 0,
     stok_min_barang INT NOT NULL DEFAULT 5,
     CONSTRAINT pk_barang PRIMARY KEY (id_barang),
-    CONSTRAINT uq_barang_kode UNIQUE (kode_barang),
     CONSTRAINT ck_barang_harga CHECK (harga_jual_barang >= 0),
     CONSTRAINT ck_barang_stok CHECK (stok_barang >= 0),
     CONSTRAINT ck_barang_stok_min CHECK (stok_min_barang >= 0)
@@ -60,11 +56,11 @@ CREATE TABLE pemasok (
     id_pemasok INT NOT NULL AUTO_INCREMENT,
     nama_pemasok VARCHAR(100) NOT NULL,
     telepon_pemasok VARCHAR(15) NULL,
-    alamat_pemasok TEXT NULL,
+    alamat_pemasok VARCHAR(100) NOT NULL,
     CONSTRAINT pk_pemasok PRIMARY KEY (id_pemasok)
 ) ENGINE=InnoDB;
 
--- 3. Buat Tabel Transaksi & Pendukung (Anak)[cite: 20]
+-- 3. Buat Tabel Transaksi & Pendukung (Anak)
 
 CREATE TABLE penjualan (
     id_penjualan INT NOT NULL AUTO_INCREMENT,
